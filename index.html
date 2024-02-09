@@ -73,9 +73,7 @@
     }
   </style>
   <script>
-    // 确保DOM完全加载后执行脚本
     document.addEventListener('DOMContentLoaded', function() {
-      // 每秒更新时间
       setInterval(getTime, 1000);
 
       function write(day, hour, minute, second) {
@@ -94,9 +92,8 @@
 
       function getTime() {
         var now = new Date();
-        // 假定2024年农历新年的公历日期为2月10日
         var year = now.getFullYear();
-        var lunarNewYear = new Date(year, 1, 10, 0, 0, 0); // 月份从0开始计数，1代表2月
+        var lunarNewYear = new Date(year, 1, 10, 0, 0, 0);
         var diff = lunarNewYear - now;
 
         if (diff > 0) {
@@ -104,16 +101,20 @@
           var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
           var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
           var seconds = Math.floor((diff % (1000 * 60)) / 1000);
-          init(); // Initialize the units
+          init();
           write(days, hours, minutes, seconds);
         } else {
-          // 如果当前日期已超过农历新年日期，计算下一年的农历新年倒计时
-          lunarNewYear.setFullYear(year + 1);
-          getTime(); // 重新计算倒计时
+          // 修改此处以显示“龙年春节快乐”字样
+          document.getElementById("box").innerHTML = "<span class='new-year-greeting'>龙年春节快乐!</span>";
+          // 停止倒计时更新
+          clearInterval(intervalId);
         }
       }
+
+      var intervalId = setInterval(getTime, 1000); // 使用变量存储setInterval返回的ID
     });
   </script>
+
 
 
 
